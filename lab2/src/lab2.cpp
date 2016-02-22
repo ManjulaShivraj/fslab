@@ -41,9 +41,18 @@ void student::pack(char *fname)
 int main() {
 	student s;
 	char *fname;
-	cout<<"enter the filename";
-		cin>>fname;
-		s.read();
-		s.pack(fname);
+	int choice;
+
+		cout<<"enter your choice"<<endl;
+		cin>>choice;
+		switch(choice)
+		{
+		case 1:s.read();
+			   break;
+		case 2:cout<<"enter the filename";
+				cin>>fname;
+				s.pack(fname);
+				break;
+		}
 	return 0;
 }
