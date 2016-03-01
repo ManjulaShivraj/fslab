@@ -16,7 +16,8 @@ class student{
 	void read();
 	void pack(string fname);
 	void unpack(string fname);
-	void search(string key,string filename);
+	int search(string key,string filename);
+	int modify(string key,string filename);
 };
 void student::read()
 {
@@ -51,29 +52,64 @@ void student::unpack(string fname)
 
 	f1.close();
 }
-void student::search(string key,string fname)
+int student::search(string key,string fname)
 {
     student s[10];
-    int i=0,count=0;
+    int i=0;
     ifstream f1(fname.c_str());
     while(!f1.eof())
     {
-        cout<<"in search";
-        s[i].unpack(f1);
+        cout<<"in search"<<endl;
+        s[i].unpack(fname);
         if(key==s[i].usn)
         {
             cout<<"record found\n";
             cout<<s[i].usn<<"\t"<<s[i].name;
             break;
-
         }
         i++;
     }
     f1.close();
+    return 0;
 }
+int student::modify(string key,string fname)
+{
+  int pos;
+  int var;
+  fstream f1;
+  pos = search(key,fname);
+
+
+  if(pos>0)
+ {
+   cout<<"what should be modified?"<<endl;
+   cout<<"1.usn  2.name 3.branch 4.sem"<<endl;
+   cin>>var;
+   switch(var)
+   {
+     case 1:cin>>usn;
+            break;
+     case 2:cin>>name;
+            break;
+     case 3:cin>>branch;
+            break;
+     case 4:cin>>sem;
+            break;
+   }
+ }
+
+f1.open(fname.c_str(),ios::out);
+f1.seekp(pos);
+pack(fname);
+
+//f1<<buf;
+f1.close();
+return 0;
+}
+
 int main() {
 	student s;
-	string fname;
+	string fname,key;
 	int choice;
 		cout<<"enter your choice"<<endl;
 		cin>>choice;
@@ -88,6 +124,13 @@ int main() {
 		case 2:
 			cout<<"enter the usn"<<endl;
 			cin>>key;
-			s.search(key,fname);
+			cout<<"enter the filename"<<endl;
+			cin>>fname;
+			s.modify(key,fname);
+			//s.search(key,fname);
+			break;
+		case 3:
+
 			break;
 		}
+}
